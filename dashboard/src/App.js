@@ -1,4 +1,9 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,6 +24,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
+
+import LaunchModelForm from './launchModel';
 
 const drawerWidth = 240;
 
@@ -113,6 +120,7 @@ export default function App() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
+    <Router>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -153,11 +161,37 @@ export default function App() {
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-        </Container>
-      </main>
+      <Switch>
+        <Route exact path="/"> 
+          <Home />
+        </Route>
+        <Route exact path="/launch_model">
+          <LaunchModelForm />
+        </ Route>
+      </Switch>
     </div>
+    </Router>
   );
+}
+
+function Home() {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(true);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+
+  return (
+  <main className={classes.content}>
+    <div className={classes.appBarSpacer} />
+      <Container maxWidth="lg" className={classes.container}>
+        This should probably contain a nice description how this works, and a high level overview of the current status!
+      </Container>
+  </main>
+  )
 }
